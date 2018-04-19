@@ -1,0 +1,9 @@
+- name: Install Authorized Key
+  authorized_key:
+    user: vagrant
+    state: present
+    key: "{{ lookup('file', './vagrant_rsa.pub') }}"
+
+- name: Install Unzip
+  apt: pkg=unzip update-cache=yes
+  become: yes

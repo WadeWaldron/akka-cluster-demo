@@ -1,0 +1,6 @@
+- name: install JRE
+  apt: pkg=openjdk-8-jre update-cache=yes
+  become: yes
+- name: install JDK
+  apt: pkg=openjdk-8-jdk update-cache=yes
+  become: yes

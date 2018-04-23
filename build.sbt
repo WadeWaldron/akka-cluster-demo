@@ -17,13 +17,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % akkaVersion withSources(),
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion withSources(),
   "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion withSources(),
+  "com.lightbend.akka" %% "akka-split-brain-resolver" % "1.1.0",
   "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 )
-
-credentials += Credentials(Path.userHome / ".lightbend" / "commercial.credentials")
-resolvers += "com-mvn" at "https://repo.lightbend.com/commercial-releases/"
-resolvers += Resolver.url("com-ivy",
-  url("https://repo.lightbend.com/commercial-releases/"))(Resolver.ivyStylePatterns)
 
 enablePlugins(JavaAppPackaging)
 

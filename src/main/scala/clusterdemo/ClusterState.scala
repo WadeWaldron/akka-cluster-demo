@@ -1,15 +1,18 @@
 package clusterdemo
 
 import akka.actor.Address
+import akka.cluster.ClusterEvent.CurrentClusterState
 
-case class ClusterState(
-  leader: Option[Address] = None,
-  members: List[Address] = List.empty,
-  unreachableMembers: List[Address] = List.empty
-) {
-  def withLeader(leader: Option[Address]): ClusterState = copy(leader = leader)
-  def withMember(member: Address): ClusterState = copy(members = members :+ member)
-  def withoutMember(member: Address): ClusterState = copy(members = members.filterNot(_ == member))
-  def withUnreachableMember(member: Address): ClusterState = copy(unreachableMembers = unreachableMembers :+ member)
-  def withoutUnreachableMember(member: Address): ClusterState = copy(unreachableMembers = unreachableMembers.filterNot(_ == member))
+case class MemberState(unreachable: Boolean = false)
+
+object ClusterState {
+  def apply(currentState: CurrentClusterState, singleton: Option[Address]): ClusterState = {
+    val leader = currentState.leader
+    val members = currentState.members.map(member => member.address -> MemberState(currentState.unreachable.contains(member))).toMap
+    ClusterState(leader = leader, singleton = singleton, members = members)
+  }
+}
+
+case class ClusterState(leader: Option[Address] = None, singleton: Option[Address] = None, members: Map[Address, MemberState] = Map.empty) {
+
 }

@@ -7,3 +7,22 @@
 - name: Install Unzip
   apt: pkg=unzip update-cache=yes
   become: yes
+
+- name: Copy Run Script
+  copy:
+    src: run.sh
+    dest: /home/vagrant/run.sh
+    owner: vagrant
+    group: vagrant
+    mode: 0777
+
+- name: Copy Network Partition Simulation
+  copy:
+    src: simulateNetworkPartition.sh
+    dest: /home/vagrant/simulateNetworkPartition.sh
+    owner: vagrant
+    group: vagrant
+    mode: 0777
+
+
+
